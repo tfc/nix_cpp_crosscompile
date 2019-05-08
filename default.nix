@@ -1,5 +1,5 @@
 {
-  nixpkgs ? /home/tfc/src/nixpkgs,
+  nixpkgs ? <nixpkgs>,
   pkgs ? import nixpkgs {}
 }:
 

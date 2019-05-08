@@ -1,5 +1,5 @@
 {
-  nixpkgs ? /home/tfc/src/nixpkgs,
+  nixpkgs ? <nixpkgs>,
   pkgs ? import nixpkgs {}
 }:
 
@@ -21,10 +21,7 @@ in {
   x86_64-linux-clang = f pkgs (pkgs: pkgs.clangStdenv);
 
   raspberry-gcc = f raspberryPkgs (pkgs: pkgs.stdenv);
-  raspberry-clang = f raspberryPkgs (pkgs:
-    pkgs.overrideCC pkgs.stdenv pkgs.clang_8
-  );
-
+  raspberry-clang = f raspberryPkgs (pkgs: pkgs.clangStdenv);
 }
 
 
