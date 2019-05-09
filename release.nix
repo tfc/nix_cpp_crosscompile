@@ -4,24 +4,13 @@
 }:
 
 let
-  f = p: sf: p.callPackage (import ./derivation.nix) {
-    stdenv = sf p;
-  };
-
-  crossPkgs = platformName: import nixpkgs {
-    crossSystem = {
-      config = platformName;
-    };
-  };
-
-  raspberryPkgs = crossPkgs pkgs.lib.systems.examples.raspberryPi.config;
-
+  f = stdenv: import ./derivation.nix { inherit stdenv; };
 in {
-  x86_64-linux-gcc = f pkgs (pkgs: pkgs.stdenv);
-  x86_64-linux-clang = f pkgs (pkgs: pkgs.clangStdenv);
+  x86_64-linux-gcc = f pkgs.stdenv;
+  x86_64-linux-clang = f pkgs.clangStdenv;
 
-  raspberry-gcc = f raspberryPkgs (pkgs: pkgs.stdenv);
-  raspberry-clang = f raspberryPkgs (pkgs: pkgs.clangStdenv);
+  raspberry-gcc = f pkgs.pkgsCross.raspberryPi.stdenv;
+  raspberry-clang = f pkgs.pkgsCross.raspberryPi.clangStdenv;
 }
 
 
